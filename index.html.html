@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barista World | عالم الباريستا</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #f7f1e8;
+  color: #382519;
+}
+
+header {
+  background: #382519;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 8px;
+}
+
+.hero {
+  text-align: center;
+  padding: 70px 20px;
+  background: linear-gradient(120deg, #3c2417, #a5774b);
+  color: white;
+}
+
+.hero h1 {
+  font-size: 38px;
+}
+
+.hero p {
+  line-height: 2;
+}
+
+button {
+  background: #d2a56c;
+  color: #2c1c12;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+section {
+  padding: 30px 7%;
+}
+
+h2 {
+  color: #654329;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px #00000010;
+}
+
+.card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card p {
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+footer {
+  background: #382519;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0 15px;
+  border: 1px solid #d6c2ac;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.form-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">☕ Barista World</div>
+  <nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#recipes">الوصفات</a>
+    <a href="#products">المنتجات</a>
+    <a href="#add">إضافة</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h1>أهلاً بيك في عالم الباريستا</h1>
+  <p>
+    اتعلم تحضير القهوة باحترافية.
+    من V60 والإسبريسو للاتيه والكابتشينو.
+  </p>
+  <button onclick="document.getElementById('recipes').scrollIntoView()">
+    اكتشف الوصفات
+  </button>
+</div>
+
+<section id="recipes">
+  <h2>☕ وصفات المشروبات</h2>
+  <input id="search" placeholder="ابحث عن مشروب..." oninput="showRecipes()">
+  <div class="grid" id="recipeGrid"></div>
+</section>
+
+<section id="products">
+  <h2>🛍️ منتجات الباريستا</h2>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<section id="add">
+  <h2>➕ أضف مشروب أو منتج</h2>
+
+  <form class="form-box" id="addForm">
+    <label>نوع الإضافة</label>
+    <select id="type">
+      <option value="recipe">مشروب</option>
+      <option value="product">منتج</option>
+    </select>
+
+    <label>الاسم</label>
+    <input id="name" required placeholder="مثال: آيس لاتيه">
+
+    <label>الوصف والمقادير</label>
+    <textarea id="description" rows="4"></textarea>
+
+    <label>السعر للمنتج بالجنيه</label>
+    <input id="price" type="number" min="0">
+
+    <label>الصورة من جهازك</label>
+    <input id="photo" type="file" accept="image/*">
+
+    <button type="submit">إضافة</button>
+  </form>
+</section>
+
+<footer>
+  <h3>Barista World ☕</h3>
+  <p>كل كوب قهوة ليه حكاية.</p>
+</footer>
+
+<script>
+const recipes = [
+  {
+    name: "V60",
+    description: "15 جم بن + 250 مل ماء.\nاشطف الفلتر، أضف البن، ثم صب الماء تدريجيًا خلال 2:30 إلى 3:30 دقائق.",
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "لاتيه",
+    description: "جرعة إسبريسو 30 مل + 180 مل لبن.\nحضّر الإسبريسو، وابخر اللبن، ثم صبه فوق القهوة.",
+    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "كابتشينو",
+    description: "30 مل إسبريسو + 120 إلى 150 مل لبن.\nحضّر القهوة، وابخر اللبن مع رغوة ناعمة، ثم صبه.",
+    image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "موكا",
+    description: "30 مل إسبريسو + 15 إلى 20 جم شوكولاتة + 150 مل لبن.\nاخلط الشوكولاتة بالقهوة، ثم أضف اللبن الساخن.",
+    image: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "آيس لاتيه",
+    description: "جرعة إسبريسو + 180 مل لبن بارد + ثلج.\nضع الثلج واللبن في الكوب ثم أضف الإسبريسو.",
+    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "فرابتشينو",
+    description: "قهوة باردة + لبن + ثلج + صوص حسب الرغبة.\nاخلط المكونات في الخلاط حتى تتجانس.",
+    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80"
+  }
+];
+
+let products = [];
+let customRecipes = [];
+
+function cardHTML(item, product = false) {
+  const image = item.image || "";
+  return `
+    <article class="card">
+      ${image ? `<img src="${image}" alt="${item.name}">` : ""}
+      <div class="card-content">
+        <h3>${escapeHTML(item.name)}</h3>
+        <p>${escapeHTML(item.description || "")}</p>
+        ${product && item.price !== ""
+          && item.price != null
+          ? `<strong>${escapeHTML(String(item.price))} جنيه</strong>`
+          : ""}
+      </div>
+    </article>`;
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;",
+    '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+function showRecipes() {
+  const query = document.getElementById("search").value.trim().toLowerCase();
+  const all = [...recipes, ...customRecipes];
+  const filtered = all.filter(item =>
+    item.name.toLowerCase().includes(query)
+  );
+
+  document.getElementById("recipeGrid").innerHTML =
+    filtered.length
+      ? filtered.map(item => cardHTML(item)).join("")
+      : "<p>ملقيناش المشروب ده.</p>";
+}
+
+document.getElementById("addForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const type = document.getElementById("type").value;
+  const name = document.getElementById("name").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const price = document.getElementById("price").value;
+  const file = document.getElementById("photo").files[0];
+
+  function addItem(image) {
+    const item = { name, description, image, price };
+
+    if (type === "recipe") {
+      customRecipes.push(item);
+      showRecipes();
+    } else {
+      products.push(item);
+      document.getElementById("productGrid").innerHTML =
+        products.map(product => cardHTML(product, true)).join("");
+    }
+
+    document.getElementById("addForm").reset();
+    alert("تمت الإضافة للموقع!");
+  }
+
+  if (file) {
+    if (!file.type.startsWith("image/")) {
+      alert("اختار ملف صورة صالح.");
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert("حجم الصورة لازم يكون أقل من 2 ميجابايت.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => addItem(reader.result);
+    reader.readAsDataURL(file);
+  } else {
+    addItem("");
+  }
+});
+
+showRecipes();
+</script>
+
+</body>
+</html>
